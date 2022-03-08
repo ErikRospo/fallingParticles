@@ -69,7 +69,7 @@
     <script>
         const queryString = window.location.search;
         const urlParamter = new URLSearchParams(queryString);
-        let modev = Math.floor(Math.random() * 7);
+        let modev = 5;
         let image = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg"
         urlParamter.forEach((value, key) => {
             switch (key) {
@@ -115,7 +115,7 @@
         ModeSelector.addEventListener("input", () => {
             mode = parseInt(ModeSelector.value)
             modeValue.innerHTML = mode.toString()
-            modeList.innerText = modeList[mode - 1]
+            modeText.innerText = modeList[mode - 1]
             console.log(ModeSelector);
             console.log(ModeSelector.value);
             console.log(mode);
@@ -135,6 +135,12 @@
             let brightnessMinumum = 0;
             let brightnessMaximum = 0;
             let particlesArray = [];
+            /*
+            5000: low end computers
+            10000: mid range computers
+            15000: medium-high end computers
+            20000: high end computers.
+            */
             const numberOfParticles = 10000;
             let mappedImage = []
             for (let y = 0; y < ch; y++) {
@@ -244,6 +250,8 @@
                             if ((this.x >= cw) || (this.x <= 0) || (this.y >= ch) || (this.y <= 0)) {
                                 this.x = map(Math.random(), 0, 1, (cw / 2) - 10, (cw / 2) + 10)
                                 this.y = map(Math.random(), 0, 1, (ch / 2) - 10, (ch / 2) + 10);
+                                // this.x = cw / 2;
+                                // this.y = ch / 2;
                             }
                             break;
                         default:
@@ -259,7 +267,7 @@
                 draw() {
                     ctx.beginPath();
                     ctx.fillStyle = this.color;
-                    ctx.arc(this.x, this.y, this.size * ScalingFactor, 0, Math.PI * 2);
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }
