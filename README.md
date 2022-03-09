@@ -1,5 +1,5 @@
 # fallingParticles
-This is a particle simulation. The original version (indexOG.html) only has particles falling down. The updated version (indexMain.html) has a slider to control how the particles move.
+This is a particle simulation. The original version (indexOG.html) only has particles falling down. The updated version (indexMain.html) has a slider to control how the particles move. It also has a slider to contol the number of particles.
 The six modes are:
 1. linear down
 2. linear up
@@ -14,4 +14,3 @@ If the animation is slow, you can try editing the number of particles on line 14
 10000: Mid range-computers
 15000: Medium-high end computers
 20000: High end computers
-
