@@ -11,6 +11,7 @@
             padding: 0;
             box-sizing: border-box;
             background: black;
+            /* display: block; */
         }
         
         #canvas1 {
@@ -97,15 +98,15 @@
         const queryString = window.location.search;
         const urlParamter = new URLSearchParams(queryString);
         let modev = 1;
-        let image = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg"
+        let image = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg";
         urlParamter.forEach((value, key) => {
             switch (key) {
                 case "mode":
                     modev = ParseInt(value);
-                    break
+                    break;
                 case "image":
                     image = value;
-                    break
+                    break;
                 default:
                     break;
             }
@@ -119,8 +120,8 @@
         const ParticleNumberValue = document.getElementById("ParticleNumberValue");
         //change the following url for the image
         // image1.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg"
-        image1.src = image
-        image1.crossOrigin = "Anonymous"
+        image1.src = image;
+        image1.crossOrigin = "Anonymous";
         const ScalingFactor = 1;
 
         let mode = modev;
@@ -143,15 +144,15 @@
             "Radial out",
             "Spiral right",
             "Spiral left"
-        ]
-        ModeSelector.value = mode.toString()
-        modeValue.innerText = mode.toString()
-        modeText.innerText = modeList[mode - 1]
-        ParticleNumberValue.innerText
+        ];
+        ModeSelector.value = mode.toString();
+        modeValue.innerText = mode.toString();
+        modeText.innerText = modeList[mode - 1];
+        ParticleNumberValue.innerText;
         ModeSelector.addEventListener("input", () => {
-            mode = parseInt(ModeSelector.value)
-            modeValue.innerHTML = mode.toString()
-            modeText.innerText = modeList[mode - 1]
+            mode = parseInt(ModeSelector.value);
+            modeValue.innerHTML = mode.toString();
+            modeText.innerText = modeList[mode - 1];
             console.log(ModeSelector);
             console.log(ModeSelector.value);
             console.log(mode);
@@ -162,12 +163,12 @@
             const ctx = canvas.getContext("2d");
             canvas.height = 720 * ScalingFactor;
             canvas.width = 1280 * ScalingFactor;
-            const ch = canvas.height
-            const cw = canvas.width
+            const ch = canvas.height;
+            const cw = canvas.width;
             ctx.drawImage(image1, 0, 0, cw, ch);
             const pixels = ctx.getImageData(0, 0, cw, ch);
-            const data = pixels.data
-            ctx.fillStyle = "black"
+            const data = pixels.data;
+            ctx.fillStyle = "black";
             ctx.fillRect(0, 0, cw, ch);
             let brightnessMinumum = 0;
             let brightnessMaximum = 0;
@@ -181,25 +182,25 @@
             let numberOfParticles = 10000;
             ParticleNumberValue.innerText = numberOfParticles;
             ParticleNumberSelector.value = numberOfParticles;
-            let mappedImage = []
+            let mappedImage = [];
             for (let y = 0; y < ch; y++) {
-                let row = []
+                let row = [];
                 for (let x = 0; x < cw; x++) {
                     const red = Math.min(data[(y * 4 * cw) + (x * 4) + 0], 255);
                     const green = Math.min(data[(y * 4 * cw) + (x * 4) + 1], 255);
                     const blue = Math.min(data[(y * 4 * cw) + (x * 4) + 2], 255);
                     const brightness = calculateRelativeBrightness(red, green, blue);
-                    brightnessMaximum = Math.max(brightness, brightnessMaximum)
-                    brightnessMinumum = Math.min(brightness, brightnessMinumum)
+                    brightnessMaximum = Math.max(brightness, brightnessMaximum);
+                    brightnessMinumum = Math.min(brightness, brightnessMinumum);
                     const cell = [brightness, red, green, blue];
                     row.push(cell);
                 }
-                mappedImage.push(row)
+                mappedImage.push(row);
             }
             if (mappedImage.find((value) => {
-                    return value == NaN
+                    return value == NaN;
                 })) {
-                console.error("one of the values of mapped image is NaN")
+                console.error("one of the values of mapped image is NaN");
             }
             console.log(data);
             console.log(mappedImage);
@@ -211,7 +212,7 @@
             }
 
             function distance(x1, y1, x2, y2) {
-                return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))
+                return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
             }
 
             function calculateRelativeBrightness(red, green, blue) {
@@ -219,7 +220,7 @@
                     (red * red) * 0.299 +
                     (green * green) * 0.587 +
                     (blue * blue) * 0.114
-                ) / 100
+                ) / 100;
             }
 
             class Particle {
@@ -247,12 +248,12 @@
                     this.dist = distance(this.x, this.y, cw / 2, ch / 2);
                     this.speed = map(mappedImage[this.positiony][this.positionx][0],
                         brightnessMinumum,
-                        brightnessMaximum, 3, 0.025)
+                        brightnessMaximum, 3, 0.025);
                     switch (mode) {
                         case 1:
                             this.y += this.speed;
                             if (this.y > ch) {
-                                this.shuffle()
+                                this.shuffle();
                             }
                             break;
                         case 2:
@@ -264,13 +265,13 @@
                         case 3:
                             this.x += this.speed;
                             if (this.y > cw) {
-                                this.shuffle()
+                                this.shuffle();
                             }
                             break;
                         case 4:
-                            this.x -= this.speed
+                            this.x -= this.speed;
                             if (this.x <= 0) {
-                                this.shuffle()
+                                this.shuffle();
                             }
                             break;
                         case 5:
@@ -279,7 +280,7 @@
                             this.y = this.y - Math.sin(this.angle) * this.speed;
                             if ((Math.round(this.x) == Math.round(cw / 2)) &&
                                 (Math.round(this.y) == Math.round(ch / 2))) {
-                                this.shuffle()
+                                this.shuffle();
                             }
                             break;
                         case 6:
@@ -287,7 +288,7 @@
                             this.x = this.x + Math.cos(this.angle) * this.speed;
                             this.y = this.y + Math.sin(this.angle) * this.speed;
                             if ((this.x >= cw) || (this.x <= 0) || (this.y >= ch) || (this.y <= 0)) {
-                                this.x = map(Math.random(), 0, 1, (cw / 2) - 10, (cw / 2) + 10)
+                                this.x = map(Math.random(), 0, 1, (cw / 2) - 10, (cw / 2) + 10);
                                 this.y = map(Math.random(), 0, 1, (ch / 2) - 10, (ch / 2) + 10);
                                 // this.x = cw / 2;
                                 // this.y = ch / 2;
@@ -295,19 +296,19 @@
                             break;
                         case 7:
                             this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
-                            this.x = (cw / 2) - Math.cos(this.angle - 0.05) * (this.dist - 0.1)
-                            this.y = (ch / 2) - Math.sin(this.angle - 0.05) * (this.dist - 0.1)
+                            this.x = (cw / 2) - Math.cos(this.angle - 0.05) * (this.dist - 0.1);
+                            this.y = (ch / 2) - Math.sin(this.angle - 0.05) * (this.dist - 0.1);
                             if ((Math.round(this.x) == Math.round(cw / 2)) &&
                                 (Math.round(this.y) == Math.round(ch / 2))) {
-                                this.shuffle()
+                                this.shuffle();
                             }
                         case 8:
                             this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
-                            this.x = (cw / 2) - Math.cos(this.angle + 0.05) * (this.dist - 0.1) * this.speed / 4
-                            this.y = (ch / 2) - Math.sin(this.angle + 0.05) * (this.dist - 0.1) * this.speed / 4
+                            this.x = (cw / 2) - Math.cos(this.angle + 0.05) * (this.dist - 0.1) * this.speed / 4;
+                            this.y = (ch / 2) - Math.sin(this.angle + 0.05) * (this.dist - 0.1) * this.speed / 4;
                             if ((Math.round(this.x) == Math.round(cw / 2)) &&
                                 (Math.round(this.y) == Math.round(ch / 2))) {
-                                this.shuffle()
+                                this.shuffle();
                             }
                         default:
                             break;
@@ -327,6 +328,12 @@
                 }
             }
 
+            function clearScreen() {
+                // ctx.globalAlpha = 0.025;
+                ctx.fillStyle = "black";
+                ctx.fillRect(0, 0, cw, ch);
+            }
+
             function init() {
                 for (let i = 0; i < numberOfParticles; i++) {
                     particlesArray.push(new Particle())
@@ -337,6 +344,7 @@
                 particlesArray.forEach((value) => {
                     value.shuffle();
                 })
+                clearScreen();
             })
             ParticleNumberSelector.addEventListener("change", () => {
                 numberOfParticles = ParticleNumberSelector.value;
@@ -345,24 +353,23 @@
                     particlesArray.pop();
                 }
                 for (let i = 0; i < numberOfParticles; i++) {
-                    particlesArray.push(new Particle())
+                    particlesArray.push(new Particle());
                 }
+                clearScreen();
             })
 
             function animate() {
 
-                // ctx.globalAlpha = 0.025;
-                ctx.fillStyle = "black";
-                ctx.fillRect(0, 0, cw, ch)
-                    // ctx.drawImage(image1, 0, 0, cw, ch);
+                clearScreen();
+                // ctx.drawImage(image1, 0, 0, cw, ch);
                 for (let index = 0; index < particlesArray.length; index++) {
                     particlesArray[index].update();
                     particlesArray[index].draw();
 
                 }
-                requestAnimationFrame(animate)
+                requestAnimationFrame(animate);
             }
-            animate()
+            animate();
         });
     </script>
 </body>
