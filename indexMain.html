@@ -22,19 +22,6 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
-        /*         
-        #reset {
-            background-color: red;
-            border: none;
-            border-radius: 50px;
-            position: absolute;
-            bottom: 0;
-            left: 93%;
-            width: 100px;
-            height: 60px;
-            transform: translate(0, -50%);
-            font: 24pt white bolder;
-        } */
         
         .in-div {
             border: none;
@@ -45,6 +32,7 @@
             width: 100px;
             height: 60px;
             transform: rotate(90deg) translate(-50%, -50%);
+            background: transparent;
             font: 12pt white bolder;
         }
         
@@ -53,6 +41,38 @@
             color: white;
             top: 0%;
             left: 0%
+        }
+        
+        #resetButtonDiv {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 50px;
+        }
+        
+        #resetButton {
+            position: inherit;
+            background-color: red;
+            width: inherit;
+            height: inherit;
+            font: large bolder white;
+            color: white;
+            border-radius: 99px;
+            border-color: transparent;
+            border-width: 0px;
+            cursor: pointer;
+        }
+        
+        #selectorText {
+            color: white;
+            position: absolute;
+            bottom: 13%;
+            right: 5px;
+            width: 100px;
+            height: 60px;
+            background: transparent;
+            margin-right: 0px;
         }
     </style>
     <title>Particle Rain</title>
@@ -63,14 +83,17 @@
     <span class="modeTextClass" id="modeValue"></span><br>
     <span class="modeTextClass" id="modeText"></span>
     <canvas id="canvas1"></canvas>
+    <span id="selectorText">Mode Selector</span>
     <div class="in-div">
-
         <input type="range" min="1" max="6" step="1" name="Mode" id="ModeSelector">
+    </div>
+    <div id="resetButtonDiv">
+        <button id="resetButton">Reset</button>
     </div>
     <script>
         const queryString = window.location.search;
         const urlParamter = new URLSearchParams(queryString);
-        let modev = 5;
+        let modev = 1;
         let image = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg"
         urlParamter.forEach((value, key) => {
             switch (key) {
@@ -88,6 +111,7 @@
         const ModeSelector = document.getElementById("ModeSelector");
         const modeValue = document.getElementById("modeValue");
         const modeText = document.getElementById("modeText");
+        const resetButton = document.getElementById("resetButton");
         //change the following url for the image
         // image1.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg"
         image1.src = image
@@ -101,6 +125,8 @@
         mode=4:linear left
         mode=5:radial in
         mode=6:radial out
+        mode=7:Spiral right
+        mode=8:Spiral left
         */
         const modeList = [
             "Linear down",
@@ -108,7 +134,9 @@
             "Linear right",
             "Linear left",
             "Radial in",
-            "Radial out"
+            "Radial out",
+            "Spiral right",
+            "Spiral left"
         ]
         ModeSelector.value = mode.toString()
         modeValue.innerText = mode.toString()
@@ -122,6 +150,7 @@
             console.log(mode);
         });
         image1.addEventListener("load", () => {
+
             const canvas = document.getElementById("canvas1");
             const ctx = canvas.getContext("2d");
             canvas.height = 720 * ScalingFactor;
@@ -206,7 +235,7 @@
                     this.g = mappedImage[this.positiony][this.positionx][2];
                     this.b = mappedImage[this.positiony][this.positionx][3];
                     this.color = `rgb(${this.r+15},${this.g+15},${this.b+15})`;
-                    // this.dist = distance(this.x, this.y, cw / 2, ch / 2)
+                    this.dist = distance(this.x, this.y, cw / 2, ch / 2);
                     this.speed = map(mappedImage[this.positiony][this.positionx][0],
                         brightnessMinumum,
                         brightnessMaximum, 3, 0.025)
@@ -255,6 +284,22 @@
                                 // this.y = ch / 2;
                             }
                             break;
+                        case 7:
+                            this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
+                            this.x = (cw / 2) - Math.cos(this.angle - 0.05) * (this.dist - 0.1)
+                            this.y = (ch / 2) - Math.sin(this.angle - 0.05) * (this.dist - 0.1)
+                            if ((Math.round(this.x) == Math.round(cw / 2)) &&
+                                (Math.round(this.y) == Math.round(ch / 2))) {
+                                this.shuffle()
+                            }
+                        case 8:
+                            this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
+                            this.x = (cw / 2) - Math.cos(this.angle + 0.05) * (this.dist - 0.1) * this.speed / 4
+                            this.y = (ch / 2) - Math.sin(this.angle + 0.05) * (this.dist - 0.1) * this.speed / 4
+                            if ((Math.round(this.x) == Math.round(cw / 2)) &&
+                                (Math.round(this.y) == Math.round(ch / 2))) {
+                                this.shuffle()
+                            }
                         default:
                             break;
                     }
@@ -279,6 +324,11 @@
                 }
             }
             init()
+            resetButton.addEventListener("click", () => {
+                particlesArray.forEach((value) => {
+                    value.shuffle();
+                })
+            })
 
             function animate() {
 
@@ -297,5 +347,7 @@
         });
     </script>
 </body>
+
+</html>
 
 </html>
