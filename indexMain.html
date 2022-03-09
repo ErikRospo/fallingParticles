@@ -81,11 +81,14 @@
 <body>
     <span class="modeTextClass">Mode:</span>
     <span class="modeTextClass" id="modeValue"></span><br>
-    <span class="modeTextClass" id="modeText"></span>
+    <span class="modeTextClass" id="modeText"></span><br>
+    <span class="modeTextClass">Particles:</span>
+    <span class="modeTextClass" id="ParticleNumberValue"></span>
     <canvas id="canvas1"></canvas>
-    <span id="selectorText">Mode Selector</span>
+    <span id="selectorText">Mode Selector <br><br>Particle number Selector</span>
     <div class="in-div">
         <input type="range" min="1" max="6" step="1" name="Mode" id="ModeSelector">
+        <input type="range" min="1000" max="20000" step="1000" name="Mode" id="NumberSelector">
     </div>
     <div id="resetButtonDiv">
         <button id="resetButton">Reset</button>
@@ -112,11 +115,14 @@
         const modeValue = document.getElementById("modeValue");
         const modeText = document.getElementById("modeText");
         const resetButton = document.getElementById("resetButton");
+        const ParticleNumberSelector = document.getElementById("NumberSelector");
+        const ParticleNumberValue = document.getElementById("ParticleNumberValue");
         //change the following url for the image
         // image1.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg"
         image1.src = image
         image1.crossOrigin = "Anonymous"
         const ScalingFactor = 1;
+
         let mode = modev;
         /*
         mode=1:linear down
@@ -141,6 +147,7 @@
         ModeSelector.value = mode.toString()
         modeValue.innerText = mode.toString()
         modeText.innerText = modeList[mode - 1]
+        ParticleNumberValue.innerText
         ModeSelector.addEventListener("input", () => {
             mode = parseInt(ModeSelector.value)
             modeValue.innerHTML = mode.toString()
@@ -171,7 +178,9 @@
             15000: medium-high end computers
             20000: high end computers.
             */
-            const numberOfParticles = 10000;
+            let numberOfParticles = 10000;
+            ParticleNumberValue.innerText = numberOfParticles;
+            ParticleNumberSelector.value = numberOfParticles;
             let mappedImage = []
             for (let y = 0; y < ch; y++) {
                 let row = []
@@ -214,7 +223,7 @@
             }
 
             class Particle {
-                constructor(index) {
+                constructor() {
                     this.x = Math.random() * cw;
                     this.y = Math.random() * ch;
                     this.speed = 0;
@@ -227,7 +236,7 @@
                     this.x = Math.random() * cw;
                     this.y = Math.random() * ch;
                 }
-                update(index) {
+                update() {
                     this.positiony = Math.floor(this.y);
                     this.positionx = Math.floor(this.x);
                     // console.log(this.positiony, this.positionx);
@@ -320,7 +329,7 @@
 
             function init() {
                 for (let i = 0; i < numberOfParticles; i++) {
-                    particlesArray.push(new Particle(i))
+                    particlesArray.push(new Particle())
                 }
             }
             init()
@@ -328,6 +337,16 @@
                 particlesArray.forEach((value) => {
                     value.shuffle();
                 })
+            })
+            ParticleNumberSelector.addEventListener("change", () => {
+                numberOfParticles = ParticleNumberSelector.value;
+                ParticleNumberValue.innerText = numberOfParticles;
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray.pop();
+                }
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particlesArray.push(new Particle())
+                }
             })
 
             function animate() {
@@ -337,7 +356,7 @@
                 ctx.fillRect(0, 0, cw, ch)
                     // ctx.drawImage(image1, 0, 0, cw, ch);
                 for (let index = 0; index < particlesArray.length; index++) {
-                    particlesArray[index].update(index);
+                    particlesArray[index].update();
                     particlesArray[index].draw();
 
                 }
