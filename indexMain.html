@@ -41,7 +41,8 @@
             font: 12pt white bolder;
             color: white;
             top: 0%;
-            left: 0%
+            left: 0%;
+            user-select: none;
         }
         
         #resetButtonDiv {
@@ -59,10 +60,11 @@
             height: inherit;
             font: large bolder white;
             color: white;
-            border-radius: 99px;
+            border-radius: 20px;
             border-color: transparent;
             border-width: 0px;
             cursor: pointer;
+            user-select: none;
         }
         
         #selectorText {
@@ -74,6 +76,7 @@
             height: 60px;
             background: transparent;
             margin-right: 0px;
+            user-select: none;
         }
     </style>
     <title>Particle Rain</title>
@@ -88,7 +91,7 @@
     <canvas id="canvas1"></canvas>
     <span id="selectorText">Mode Selector <br><br>Particle number Selector</span>
     <div class="in-div">
-        <input type="range" min="1" max="6" step="1" name="Mode" id="ModeSelector">
+        <input type="range" min="1" max="10" step="1" name="Mode" id="ModeSelector">
         <input type="range" min="1000" max="20000" step="1000" name="Mode" id="NumberSelector">
     </div>
     <div id="resetButtonDiv">
@@ -142,8 +145,10 @@
             "Linear left",
             "Radial in",
             "Radial out",
-            "Spiral right",
-            "Spiral left"
+            "Spiral right in ",
+            "Spiral left in",
+            "Spiral right out",
+            "Sprial left out"
         ];
         ModeSelector.value = mode.toString();
         modeValue.innerText = mode.toString();
@@ -197,6 +202,9 @@
                 }
                 mappedImage.push(row);
             }
+
+            
+
             if (mappedImage.find((value) => {
                     return value == NaN;
                 })) {
@@ -295,21 +303,41 @@
                             }
                             break;
                         case 7:
-                            this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
-                            this.x = (cw / 2) - Math.cos(this.angle - 0.05) * (this.dist - 0.1);
-                            this.y = (ch / 2) - Math.sin(this.angle - 0.05) * (this.dist - 0.1);
+                        this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
+                            this.x = this.x - Math.cos(this.angle-(Math.PI/3)) * this.speed;
+                            this.y = this.y - Math.sin(this.angle-(Math.PI/3)) * this.speed;
                             if ((Math.round(this.x) == Math.round(cw / 2)) &&
                                 (Math.round(this.y) == Math.round(ch / 2))) {
                                 this.shuffle();
                             }
+                            break;
                         case 8:
                             this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
-                            this.x = (cw / 2) - Math.cos(this.angle + 0.05) * (this.dist - 0.1) * this.speed / 4;
-                            this.y = (ch / 2) - Math.sin(this.angle + 0.05) * (this.dist - 0.1) * this.speed / 4;
+                            this.x = this.x- Math.cos(this.angle+(Math.PI/3)) * this.speed;
+                            this.y = this.y - Math.sin(this.angle+(Math.PI/3)) * this.speed;
                             if ((Math.round(this.x) == Math.round(cw / 2)) &&
                                 (Math.round(this.y) == Math.round(ch / 2))) {
                                 this.shuffle();
                             }
+                            break;
+                        case 9:
+                            this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
+                            this.x = this.x + Math.cos(this.angle-(Math.PI/3)) * this.speed;
+                            this.y = this.y + Math.sin(this.angle-(Math.PI/3)) * this.speed;
+                            if ((Math.round(this.x) == Math.round(cw / 2)) &&
+                                (Math.round(this.y) == Math.round(ch / 2))) {
+                                this.shuffle();
+                            }
+                            break;
+                        case 10:
+                            this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
+                            this.x = this.x+ Math.cos(this.angle+(Math.PI/3)) * this.speed;
+                            this.y = this.y + Math.sin(this.angle+(Math.PI/3)) * this.speed;
+                            if ((Math.round(this.x) == Math.round(cw / 2)) &&
+                                (Math.round(this.y) == Math.round(ch / 2))) {
+                                this.shuffle();
+                            }
+                            break;
                         default:
                             break;
                     }
