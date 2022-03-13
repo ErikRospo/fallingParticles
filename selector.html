@@ -1,4 +1,4 @@
-<label for="mode-select">Select a mode:</label>
+<!-- <label for="mode-select">Select a mode:</label>
 
 <select name="mode" id="mode-select">
 <option value="">--Please choose an option--</option>
@@ -12,4 +12,13 @@
 <option value="spiral-left-in">Sprial left in</option>
 <option value="spiral-right-out">Sprial right out</option>
 <option value="spiral-left-out">Sprial left out</option>
-</select>
+</select> -->
+
+<script>
+    const UrlInput = document.getElementById("UrlInput");
+    UrlInput.onsubmit = () => {
+        console.log(UrlInput.nodeValue);
+        value = UrlInput.nodeValue;
+    }
+</script>
+<input type="url" name="" id="UrlInput">
