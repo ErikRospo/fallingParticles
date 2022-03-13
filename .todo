@@ -4,6 +4,8 @@
 [ ] make Url input actually change the image
 [ ] Fix Url input to auto add CORS
 [ ] Fix url input to prevent malicious code from being ran
+[ ] Set up slider for minumum Brightness Speed
+[ ] Set up slider for maximum Brightness Speed
 Archive:
   [x] Add a url input for images @done(22-03-13 15:01)
   [x] Add menu for modes @done(22-03-13 14:59)
