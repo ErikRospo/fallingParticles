@@ -118,16 +118,16 @@
         </datalist>
     <label class="modeTextClass" for="mode-select">Select a mode:</label>
     <select class="modeTextClass" name="mode" id="mode-select">
-    <option selected="true" class="modeTextClass" value="linear-down">Linear down</option>
-    <option class="modeTextClass" value="linear-up">Linear up</option>
-    <option class="modeTextClass" value="linear-right">Linear right</option>
-    <option class="modeTextClass" value="linear-left">Linear left</option>
-    <option class="modeTextClass" value="radial-in">Radial in</option>
-    <option class="modeTextClass" value="radial-out">Radial out</option>
-    <option class="modeTextClass" value="spiral-right-in">Sprial right in</option>
-    <option class="modeTextClass" value="spiral-left-in">Sprial left in</option>
-    <option class="modeTextClass" value="spiral-right-out">Sprial right out</option>
-    <option class="modeTextClass" value="spiral-left-out">Sprial left out</option>
+        <option class="modeTextClass" value="linear-down">Linear down</option>
+        <option class="modeTextClass" value="linear-up">Linear up</option>
+        <option class="modeTextClass" value="linear-right">Linear right</option>
+        <option class="modeTextClass" value="linear-left">Linear left</option>
+        <option class="modeTextClass" value="radial-in">Radial in</option>
+        <option class="modeTextClass" value="radial-out">Radial out</option>
+        <option class="modeTextClass" value="spiral-right-in">Sprial right in</option>
+        <option class="modeTextClass" value="spiral-left-in">Sprial left in</option>
+        <option class="modeTextClass" value="spiral-right-out">Sprial right out</option>
+        <option class="modeTextClass" value="spiral-left-out">Sprial left out</option>
     </select>
     <br>
     <input type="url" name="" id="UrlInput">
@@ -187,7 +187,8 @@
             "Spiral right out",
             "Sprial left out"
         ];
-        ModeSelector.value = mode.toString();
+        ModeSelector.selected = "Linear down"
+            // ModeSelector.value = mode.toString();
         ModeSelector.addEventListener("input", () => {
             let ModeOptions = ModeSelector.children;
             for (let index = 0; index < ModeOptions.length; index++) {
@@ -308,14 +309,11 @@
                     this.positiony = Math.floor(this.y);
                     this.positionx = Math.floor(this.x);
                     this.point = new Point(this.x, this.y);
-                    this.r = mappedImage[this.positiony][this.positionx][1];
-                    this.g = mappedImage[this.positiony][this.positionx][2];
-                    this.b = mappedImage[this.positiony][this.positionx][3];
-                    this.color = `rgb(${this.r+15},${this.g+15},${this.b+15})`;
+
                     this.dist = distance(this.x, this.y, cw / 2, ch / 2);
                     this.speed = map(mappedImage[this.positiony][this.positionx][0],
                         brightnessMinumum,
-                        brightnessMaximum, 3, 0.025);
+                        brightnessMaximum, 5, 0.025);
                     switch (mode) {
                         case 1:
                             this.y += this.speed;
@@ -419,8 +417,14 @@
                     if ((this.y >= ch || this.y < 1) || (this.x >= cw || this.x < 1)) {
                         this.shuffle();
                     }
+                    this.r = mappedImage[this.positiony][this.positionx][1];
+                    this.g = mappedImage[this.positiony][this.positionx][2];
+                    this.b = mappedImage[this.positiony][this.positionx][3];
+
                 }
                 draw() {
+
+                    this.color = `rgb(${this.r+15},${this.g+15},${this.b+15})`;
                     ctx.beginPath();
                     ctx.fillStyle = this.color;
                     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
