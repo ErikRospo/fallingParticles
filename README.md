@@ -10,7 +10,8 @@ The six modes are:
 7. spiral in right
 8. spiral in left
 9. spiral out right.
-10. spiral out left.  
+10. spiral out left.
+
 The URL can be used to change the default mode. The default image is Van Gogh's "*Starry night*"  
 You can change the image by changing the url on line 73. Just note that not all images are supported due to Cross Origin Resource Policy. I find that images from wikimedia/wikipedia usualy work.   
 If the animation is slow, you can try editing the number of particles on line 144. Above it is a small guide as to what you may want to set it to. You can also see it below:  

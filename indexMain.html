@@ -203,7 +203,7 @@
                 mappedImage.push(row);
             }
 
-            
+
 
             if (mappedImage.find((value) => {
                     return value == NaN;
@@ -303,9 +303,9 @@
                             }
                             break;
                         case 7:
-                        this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
-                            this.x = this.x - Math.cos(this.angle-(Math.PI/3)) * this.speed;
-                            this.y = this.y - Math.sin(this.angle-(Math.PI/3)) * this.speed;
+                            this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
+                            this.x = this.x - Math.cos(this.angle - (Math.PI / 3)) * this.speed;
+                            this.y = this.y - Math.sin(this.angle - (Math.PI / 3)) * this.speed;
                             if ((Math.round(this.x) == Math.round(cw / 2)) &&
                                 (Math.round(this.y) == Math.round(ch / 2))) {
                                 this.shuffle();
@@ -313,8 +313,8 @@
                             break;
                         case 8:
                             this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
-                            this.x = this.x- Math.cos(this.angle+(Math.PI/3)) * this.speed;
-                            this.y = this.y - Math.sin(this.angle+(Math.PI/3)) * this.speed;
+                            this.x = this.x - Math.cos(this.angle + (Math.PI / 3)) * this.speed;
+                            this.y = this.y - Math.sin(this.angle + (Math.PI / 3)) * this.speed;
                             if ((Math.round(this.x) == Math.round(cw / 2)) &&
                                 (Math.round(this.y) == Math.round(ch / 2))) {
                                 this.shuffle();
@@ -322,8 +322,8 @@
                             break;
                         case 9:
                             this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
-                            this.x = this.x + Math.cos(this.angle-(Math.PI/3)) * this.speed;
-                            this.y = this.y + Math.sin(this.angle-(Math.PI/3)) * this.speed;
+                            this.x = this.x + Math.cos(this.angle - (Math.PI / 3)) * this.speed;
+                            this.y = this.y + Math.sin(this.angle - (Math.PI / 3)) * this.speed;
                             if ((Math.round(this.x) == Math.round(cw / 2)) &&
                                 (Math.round(this.y) == Math.round(ch / 2))) {
                                 this.shuffle();
@@ -331,8 +331,8 @@
                             break;
                         case 10:
                             this.angle = Math.atan2(this.y - ch / 2, this.x - cw / 2);
-                            this.x = this.x+ Math.cos(this.angle+(Math.PI/3)) * this.speed;
-                            this.y = this.y + Math.sin(this.angle+(Math.PI/3)) * this.speed;
+                            this.x = this.x + Math.cos(this.angle + (Math.PI / 3)) * this.speed;
+                            this.y = this.y + Math.sin(this.angle + (Math.PI / 3)) * this.speed;
                             if ((Math.round(this.x) == Math.round(cw / 2)) &&
                                 (Math.round(this.y) == Math.round(ch / 2))) {
                                 this.shuffle();
