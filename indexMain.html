@@ -218,7 +218,7 @@
             const ch = canvas.height;
             const cw = canvas.width;
             const cp = new Point(cw / 2, ch / 2);
-            const thresh = 5;
+            const thresh = 2.5;
             ctx.drawImage(image1, 0, 0, cw, ch);
             const pixels = ctx.getImageData(0, 0, cw, ch);
             const data = pixels.data;
@@ -300,6 +300,10 @@
                     this.x = Math.random() * cw;
                     this.y = Math.random() * ch;
                 }
+                centerShuffle() {
+                    this.x = map(Math.random(), 0, 1, (cw / 2) - 10, (cw / 2) + 10);
+                    this.y = map(Math.random(), 0, 1, (ch / 2) - 10, (ch / 2) + 10);
+                }
                 update() {
                     this.positiony = Math.floor(this.y);
                     this.positionx = Math.floor(this.x);
@@ -351,8 +355,7 @@
                             this.x = this.x + Math.cos(this.angle) * this.speed;
                             this.y = this.y + Math.sin(this.angle) * this.speed;
                             if ((this.x >= cw) || (this.x <= 0) || (this.y >= ch) || (this.y <= 0)) {
-                                this.x = map(Math.random(), 0, 1, (cw / 2) - 10, (cw / 2) + 10);
-                                this.y = map(Math.random(), 0, 1, (ch / 2) - 10, (ch / 2) + 10);
+                                this.centerShuffle();
                                 // this.x = cw / 2;
                                 // this.y = ch / 2;
                             }
@@ -388,10 +391,12 @@
                             this.y = this.y + Math.sin(this.angle - (Math.PI / 3)) * this.speed;
                             if ((Math.round(this.x) == Math.round(cw / 2)) &&
                                 (Math.round(this.y) == Math.round(ch / 2))) {
-                                this.shuffle();
+                                this.centerShuffle();
+                                // this.shuffle();
                             }
                             if (threshold(this.point, cp, thresh)) {
-                                this.shuffle();
+                                this.centerShuffle();
+                                // this.shuffle();
                             }
                             break;
                         case 10:
@@ -400,10 +405,12 @@
                             this.y = this.y + Math.sin(this.angle + (Math.PI / 3)) * this.speed;
                             if ((Math.round(this.x) == Math.round(cw / 2)) &&
                                 (Math.round(this.y) == Math.round(ch / 2))) {
-                                this.shuffle();
+                                this.centerShuffle();
+                                // this.shuffle();
                             }
                             if (threshold(this.point, cp, thresh)) {
-                                this.shuffle()
+                                this.centerShuffle();
+                                // this.shuffle();
                             }
                             break;
                         default:
