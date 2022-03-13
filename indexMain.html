@@ -91,7 +91,28 @@
     <canvas id="canvas1"></canvas>
     <span id="selectorText">Mode Selector <br><br>Particle number Selector</span>
     <div class="in-div">
-        <input type="range" min="1" max="10" step="1" name="Mode" id="ModeSelector">
+        <!--TODO: Set text color for label
+            TODO: set up selection to work with code
+            TODO: styling for inner text
+            TODO: Add *range* input slider to select the angle for the particles
+            TODO: add a mode for variable angle
+            
+        -->
+        <label for="mode-select">Select a mode:</label>
+        <select name="mode" id="mode-select">
+
+            <option value="linear-down">Linear down</option>
+            <option value="linear-up">Linear up</option>
+            <option value="linear-right">Linear right</option>
+            <option value="linear-left">Linear left</option>
+            <option value="radial-in">radial im</option>
+            <option value="radial-out">radial out</option>
+            <option value="spiral-right-in">Sprial right in</option>
+            <option value="spiral-left-in">Sprial left in</option>  
+            <option value="spiral-right-out">Sprial right out</option>
+            <option value="spiral-left-out">Sprial left out</option>
+        </select>
+
         <input type="range" min="1000" max="20000" step="1000" name="Mode" id="NumberSelector">
     </div>
     <div id="resetButtonDiv">
@@ -145,7 +166,7 @@
             "Linear left",
             "Radial in",
             "Radial out",
-            "Spiral right in ",
+            "Spiral right in",
             "Spiral left in",
             "Spiral right out",
             "Sprial left out"
@@ -230,7 +251,7 @@
                     (blue * blue) * 0.114
                 ) / 100;
             }
-
+            
             class Particle {
                 constructor() {
                     this.x = Math.random() * cw;
@@ -344,8 +365,7 @@
                     // this.x = this.x + Math.cos(angle);
                     // this.y = this.y + Math.sin(angle);
                     if ((this.y >= ch || this.y < 1) || (this.x >= cw || this.x < 1)) {
-                        this.y = Math.random() * ch;
-                        this.x = Math.random() * cw;
+                        this.shuffle();
                     }
                 }
                 draw() {
